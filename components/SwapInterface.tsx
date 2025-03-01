@@ -9,7 +9,7 @@ import {
 } from '@heroicons/react/24/solid';
 import TokenSelectModal, { Token } from './TokenSelectModal';
 import SettingsModal from './SettingsModal';
-import TransactionHistory from './TransactionHistory';
+import DEXStats from './TransactionHistory';
 import PriceChart from './PriceChart';
 import { useTokenContract } from '../hooks/useTokenContract';
 import { useUniswap } from '../hooks/useUniswap';
@@ -324,8 +324,8 @@ const SwapInterface = () => {
         )}
       </div>
 
-      {/* Transaction History */}
-      <TransactionHistory />
+      {/* DEX Stats */}
+      <DEXStats />
 
       {/* Modals */}
       <TokenSelectModal

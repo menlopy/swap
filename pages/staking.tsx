@@ -3,7 +3,7 @@ import Head from 'next/head';
 import Navigation from '../components/Navigation';
 import { useState, useEffect } from 'react';
 import { ethers } from 'ethers';
-import { switchToMonadNetwork } from '../utils/web3';
+import { walletManager } from '../utils/web3';
 
 const Staking: NextPage = () => {
   const [isConnecting, setIsConnecting] = useState(false);
@@ -12,58 +12,50 @@ const Staking: NextPage = () => {
   const [rewardAmount, setRewardAmount] = useState('0');
   const [stakingPeriod, setStakingPeriod] = useState('7');
 
-  // Listen for account changes
+  // Cüzdan bağlantısını yönet
   useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', (accounts: string[]) => {
-        if (accounts.length > 0) {
-          setAccount(accounts[0]);
-        } else {
-          setAccount(null);
-        }
-      });
-    }
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged', () => {});
-      }
+    // Sayfa yüklendiğinde mevcut hesabı kontrol et
+    const checkCurrentAccount = async () => {
+      const currentAccount = await walletManager.getCurrentAccount();
+      setAccount(currentAccount);
     };
+    
+    checkCurrentAccount();
+    
+    // Hesap değişikliklerini dinle
+    walletManager.setAccountChangeCallback((newAccount) => {
+      setAccount(newAccount);
+    });
+    
+    // Provider'ı başlat
+    walletManager.initProvider();
+    
   }, []);
 
   const handleWalletClick = async () => {
-    if (account) {
-      try {
-        await window.ethereum.request({
-          method: "wallet_requestPermissions",
-          params: [{ eth_accounts: {} }]
-        });
-      } catch (error) {
-        console.error('Failed to disconnect wallet:', error);
-      }
-      setAccount(null);
-      return;
-    }
-
-    if (!window.ethereum) {
-      alert('Please install MetaMask to use this app');
-      return;
-    }
-
     try {
       setIsConnecting(true);
-      await switchToMonadNetwork();
-      const accounts = await window.ethereum.request({
-        method: "wallet_requestPermissions",
-        params: [{ eth_accounts: {} }]
-      }).then(() => window.ethereum.request({ 
-        method: 'eth_requestAccounts' 
-      }));
-      setAccount(accounts[0]);
+      
+      if (account) {
+        // Eğer zaten bağlıysa, cüzdan değiştirme işlemini başlat
+        const newAccount = await walletManager.switchWallet();
+        setAccount(newAccount);
+      } else {
+        // Bağlı değilse, yeni bağlantı kur
+        const newAccount = await walletManager.connectWallet();
+        setAccount(newAccount);
+      }
     } catch (error) {
-      console.error('Failed to connect wallet:', error);
+      console.error('Wallet interaction failed:', error);
     } finally {
       setIsConnecting(false);
     }
+  };
+
+  // Cüzdanı ayır
+  const disconnectWallet = () => {
+    walletManager.disconnectWallet();
+    setAccount(null);
   };
 
   return (
@@ -87,6 +79,7 @@ const Staking: NextPage = () => {
         account={account}
         isConnecting={isConnecting}
         onWalletClick={handleWalletClick}
+        setAccount={disconnectWallet}
       />
 
       <div className="relative">

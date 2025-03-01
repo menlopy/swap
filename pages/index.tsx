@@ -3,69 +3,56 @@ import Head from 'next/head';
 import SwapInterface from '../components/SwapInterface';
 import Navigation from '../components/Navigation';
 import { useState, useEffect } from 'react';
-import { switchToMonadNetwork } from '../utils/web3';
+import { walletManager } from '../utils/web3';
 
 const Home: NextPage = () => {
   const [isConnecting, setIsConnecting] = useState(false);
   const [account, setAccount] = useState<string | null>(null);
 
-  // Listen for account changes
+  // Cüzdan bağlantısını yönet
   useEffect(() => {
-    if (window.ethereum) {
-      window.ethereum.on('accountsChanged', (accounts: string[]) => {
-        if (accounts.length > 0) {
-          setAccount(accounts[0]);
-        } else {
-          setAccount(null);
-        }
-      });
-    }
-    return () => {
-      if (window.ethereum) {
-        window.ethereum.removeListener('accountsChanged', () => {});
-      }
+    // Sayfa yüklendiğinde mevcut hesabı kontrol et
+    const checkCurrentAccount = async () => {
+      const currentAccount = await walletManager.getCurrentAccount();
+      setAccount(currentAccount);
     };
+    
+    checkCurrentAccount();
+    
+    // Hesap değişikliklerini dinle
+    walletManager.setAccountChangeCallback((newAccount) => {
+      setAccount(newAccount);
+    });
+    
+    // Provider'ı başlat
+    walletManager.initProvider();
+    
   }, []);
 
   const handleWalletClick = async () => {
-    if (account) {
-      // If already connected, disconnect
-      try {
-        await window.ethereum.request({
-          method: "wallet_requestPermissions",
-          params: [{ eth_accounts: {} }]
-        });
-      } catch (error) {
-        console.error('Failed to disconnect wallet:', error);
-      }
-      setAccount(null);
-      return;
-    }
-
-    if (!window.ethereum) {
-      alert('Please install MetaMask to use this app');
-      return;
-    }
-
     try {
       setIsConnecting(true);
-      // Switch to Monad network first
-      await switchToMonadNetwork();
       
-      // Force MetaMask to show account selection
-      const accounts = await window.ethereum.request({
-        method: "wallet_requestPermissions",
-        params: [{ eth_accounts: {} }]
-      }).then(() => window.ethereum.request({ 
-        method: 'eth_requestAccounts' 
-      }));
-      
-      setAccount(accounts[0]);
+      if (account) {
+        // Eğer zaten bağlıysa, cüzdan değiştirme işlemini başlat
+        const newAccount = await walletManager.switchWallet();
+        setAccount(newAccount);
+      } else {
+        // Bağlı değilse, yeni bağlantı kur
+        const newAccount = await walletManager.connectWallet();
+        setAccount(newAccount);
+      }
     } catch (error) {
-      console.error('Failed to connect wallet:', error);
+      console.error('Wallet interaction failed:', error);
     } finally {
       setIsConnecting(false);
     }
+  };
+
+  // Cüzdanı ayır
+  const disconnectWallet = () => {
+    walletManager.disconnectWallet();
+    setAccount(null);
   };
 
   return (
@@ -80,7 +67,7 @@ const Home: NextPage = () => {
       </div>
 
       <Head>
-        <title>Monad Token Swap</title>
+        <title>MonaDEX - Swap</title>
         <meta name="description" content="Swap tokens on Monad Network" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
@@ -89,6 +76,7 @@ const Home: NextPage = () => {
         account={account}
         isConnecting={isConnecting}
         onWalletClick={handleWalletClick}
+        setAccount={disconnectWallet}
       />
 
       <div className="relative">
