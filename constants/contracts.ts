@@ -1,18 +1,19 @@
-export const MONAD_CHAIN_ID = '0x1'; // Using Ethereum mainnet for testing
-export const MONAD_RPC_URL = 'https://mainnet.infura.io/v3/your-project-id'; // Replace with your Infura project ID
+export const MONAD_CHAIN_ID = '0x279f'; // Monad Testnet Chain ID
+export const MONAD_RPC_URL = 'https://testnet-rpc.monad.xyz'; // Monad Testnet RPC URL
 
 export const CONTRACTS = {
-  SWAP: '0x0000000000000000000000000000000000000001', // Placeholder address
+  FACTORY: '0xd0ec37a8CcF6d90692F22548ad1b79B63CC6734f',
+  ROUTER: '0x8eceC8132ebB3BeA5dCfB9fd2d33fF9a0DC9242D',
   TOKENS: {
     MONAD: {
-      address: '0x0000000000000000000000000000000000000002',
+      address: '0x62D1040C7584feFB31a554B5970bbF34A838eDa2',
       decimals: 18,
       symbol: 'MONAD',
       name: 'Monad Token',
       logoURI: '/tokens/monad.png',
     },
     WETH: {
-      address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2', // Real WETH address
+      address: '0xf14d8131e66c33C6bA481c7941D682A37a2da98F',
       decimals: 18,
       symbol: 'WETH',
       name: 'Wrapped Ether',
@@ -44,4 +45,8 @@ export const DEFAULT_SLIPPAGE = 0.5; // 0.5%
 export const MAX_SLIPPAGE = 50; // 50%
 export const PRICE_UPDATE_INTERVAL = 10000; // 10 seconds
 export const GAS_LIMIT_MULTIPLIER = 1.2; // 20% buffer for gas limit estimation
-export const USER_XP_CONTRACT_ADDRESS = '0x...'; // Replace with the actual deployed contract address 
+
+// Contract Addresses
+export const USER_XP_CONTRACT_ADDRESS = '0x15320fFE0584F36c18c408210e0f530E8E9d2317';
+export const STAKING_TOKEN_ADDRESS = '0xC866d9729794b8ddF72d18DcAA00f2f2BAE54162';
+export const PAIR_ADDRESS = '0x6e9d2c2B780F2798b45569fb548B799c41B637BE'; 

@@ -37,16 +37,16 @@ contract UserXP is Ownable, ReentrancyGuard {
 
     constructor() {
         // Seviyeleri ayarla
-        levels[1] = LevelInfo(0, "🌱", "Novice Trader");
-        levels[2] = LevelInfo(100, "⭐️", "Rising Star");
-        levels[3] = LevelInfo(500, "🌟", "Trading Expert");
-        levels[4] = LevelInfo(1000, "💫", "Swap Master");
-        levels[5] = LevelInfo(2500, "✨", "Trading Legend");
-        levels[6] = LevelInfo(5000, "🌠", "Swap God");
-        levels[7] = LevelInfo(10000, "👑", "Trading Royalty");
-        levels[8] = LevelInfo(25000, "🔮", "Mystic Trader");
-        levels[9] = LevelInfo(50000, "⚡️", "Trading Oracle");
-        levels[10] = LevelInfo(100000, "🌌", "Cosmic Trader");
+        levels[1] = LevelInfo(0, "Seed", "Novice Trader");
+        levels[2] = LevelInfo(100, "Star", "Rising Star");
+        levels[3] = LevelInfo(500, "SuperStar", "Trading Expert");
+        levels[4] = LevelInfo(1000, "Diamond", "Trading Master");
+        levels[5] = LevelInfo(2000, "Crown", "Trading Legend");
+        levels[6] = LevelInfo(5000, "Galaxy", "Swap God");
+        levels[7] = LevelInfo(10000, "King", "Trading Royalty");
+        levels[8] = LevelInfo(25000, "Crystal", "Mystic Trader");
+        levels[9] = LevelInfo(50000, "Lightning", "Trading Oracle");
+        levels[10] = LevelInfo(100000, "Ultimate", "Trading Deity");
     }
 
     // Router'ı ayarla
