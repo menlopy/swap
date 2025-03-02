@@ -30,6 +30,11 @@
       "static/chunks/main.js",
       "static/chunks/pages/_error.js"
     ],
+    "/perpetual": [
+      "static/chunks/webpack.js",
+      "static/chunks/main.js",
+      "static/chunks/pages/perpetual.js"
+    ],
     "/staking": [
       "static/chunks/webpack.js",
       "static/chunks/main.js",

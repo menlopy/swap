@@ -75,6 +75,15 @@ const Navigation: React.FC<NavigationProps> = ({
                 Staking
               </span>
             </Link>
+            <Link href="/perpetual">
+              <span className={`transition-colors ${
+                currentPath === '/perpetual'
+                  ? 'text-white hover:text-blue-500'
+                  : 'text-gray-400 hover:text-white'
+              }`}>
+                Perpetual
+              </span>
+            </Link>
             <a
               href="https://docs.monorail.xyz"
               target="_blank"
