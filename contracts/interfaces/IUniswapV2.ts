@@ -34,9 +34,9 @@ export const UNISWAP_V2_PAIR_ABI = [
   "function transferFrom(address from, address to, uint value) external returns (bool)"
 ];
 
-// Monad ağı için Uniswap adresleri (deploy edildikten sonra güncellenecek)
+// Monad ağı için Uniswap adresleri
 export const UNISWAP_ADDRESSES = {
-  FACTORY: '',
-  ROUTER: '',
+  FACTORY: '0xd0ec37a8CcF6d90692F22548ad1b79B63CC6734f',
+  ROUTER: '0x8eceC8132ebB3BeA5dCfB9fd2d33fF9a0DC9242D',
   INIT_CODE_HASH: '0x96e8ac4277198ff8b6f785478aa9a39f403cb768dd02cbee326c3e7da348845f' // UniswapV2 default
 }; 
