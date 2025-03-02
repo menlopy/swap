@@ -10,28 +10,28 @@ export const CONTRACTS = {
       decimals: 18,
       symbol: 'MONAD',
       name: 'Monad Token',
-      logoURI: '/tokens/monad.png',
+      logoURI: 'https://www.monad.xyz/monad.svg',
     },
     WETH: {
       address: '0xf14d8131e66c33C6bA481c7941D682A37a2da98F',
       decimals: 18,
       symbol: 'WETH',
       name: 'Wrapped Ether',
-      logoURI: '/tokens/weth.png',
+      logoURI: 'https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2/logo.png',
     },
-    USDC: {
-      address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48', // Real USDC address
-      decimals: 6,
-      symbol: 'USDC',
-      name: 'USD Coin',
-      logoURI: '/tokens/usdc.png',
+    SRT1: {
+      address: '0x08EB313361351c2EE74Ef4E49198c76508521ceD',
+      decimals: 18,
+      symbol: 'SRT',
+      name: 'Staking Reward Token',
+      logoURI: '',
     },
-    USDT: {
-      address: '0xdAC17F958D2ee523a2206206994597C13D831ec7', // Real USDT address
-      decimals: 6,
-      symbol: 'USDT',
-      name: 'Tether USD',
-      logoURI: '/tokens/usdt.png',
+    SRT2: {
+      address: '0xC866d9729794b8ddF72d18DcAA00f2f2BAE54162',
+      decimals: 18,
+      symbol: 'SRT',
+      name: 'Staking Reward Token',
+      logoURI: '',
     },
   },
 };

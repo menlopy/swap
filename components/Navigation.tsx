@@ -85,7 +85,7 @@ const Navigation: React.FC<NavigationProps> = ({
               </span>
             </Link>
             <a
-              href="https://docs.monorail.xyz"
+              href="https://docs.monorail.xyz/problem/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-white transition-colors flex items-center gap-1"
